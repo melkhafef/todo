@@ -55,28 +55,32 @@ app.get('/user/:id/todos', function (req, res) {
     })
 })
 app.put('/todos/:id', function (req, res) {
-    let sess = req.session;
-    let sql = `update todo SET title=${req.body.title} where id=${req.params.id}`
+    let sql = `update todo SET title='${req.body.title}',description='${req.body.description}',duedate='${req.body.duedate}'    where id=${req.params.id}`
     conection.query(sql, (err, result) => {
         if (err) throw err;
-        res.send(result.affectedRows);
+        res.end();
     })
 })
 app.delete('/todos/:id', function (req, res) {
-    let sess = req.session;
     let sql = `DELETE FROM todo WHERE id=${req.params.id}`;
     conection.query(sql, (err, result) => {
         if (err) throw err;
-        res.send(result.affectedRows);
+        res.end();
     })
 })
 app.post('/user/:id/todos', function (req, res) {
     let sql = `insert into todo (title,description,duedate,isdone,user_id) values ('${req.body.title}',
-        '${req.body.description}','${req.body.duedate}',${false},${parseInt(req.params.id)})`
+        '${req.body.description}','${req.body.duedate}',${false},${req.params.id})`
     conection.query(sql, (err, result) => {
         if (err) throw err;
-        console.log(result);
-        res.status(201);
+        res.end();
+    })
+})
+app.put('/todos',(req,res)=>{
+    let sql = `update todo set isdone=true where id=${req.body.todoId}`
+    conection.query(sql,(err,resulte)=>{
+        if(err) throw err;
+        res.end();
     })
 })
 app.listen(3000);

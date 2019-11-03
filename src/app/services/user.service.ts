@@ -23,12 +23,18 @@ export class UserService {
     }));
   }
   addTodo(id: number, todo: Todo) {
-    return this.http.post(`http://localhost:3000/user/${id}/todos`, todo).subscribe();
+    return this.http.post(`http://localhost:3000/user/${id}/todos`, todo);
   }
   getTodos(id:number) {
-    return this.http.get(`http://localhost:3000/user/${id}/todos`).subscribe(data=>{
-      console.log(data);
-      localStorage.setItem(`user_todos`,JSON.stringify(data));
-    });
+    return this.http.get(`http://localhost:3000/user/${id}/todos`);
+  }
+  deleteTodo(id:number) {
+    return this.http.delete(`http://localhost:3000/todos/${id}`);
+  }
+  updateTodo(todo:Todo,todoId:number){
+    return this.http.put(`http://localhost:3000/todos/${todoId}`, todo)
+  }
+  done(todoId:number){
+    return this.http.put('http://localhost:3000/todos',{todoId})
   }
 }
