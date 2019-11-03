@@ -7,16 +7,20 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./todos.component.css']
 })
 export class TodosComponent implements OnInit {
-  todo:Todo;
+  todo: Todo;
   todos;
-  constructor(private userService:UserService) { }
+  userId;
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.todo=new Todo();
+    this.userId = localStorage.getItem('uid');
+    this.todo = new Todo();
+    this.userService.getTodos(this.userId);
+    this.todos = JSON.parse(localStorage.getItem('user_todos'));
   }
-  addTodo(){
-    this.userService.addTodo(this.todo);
+  addTodo() {
+    this.userService.addTodo(this.userId, this.todo);
   }
-  
+
 
 }
