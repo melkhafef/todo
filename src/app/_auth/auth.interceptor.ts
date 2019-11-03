@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with basic auth credentials if available
-        const currentUser = this.userService.currentUserValue;
+        const currentUser = this.userService.currentUser;
         const token = localStorage.getItem('token');
         request = request.clone({
             setHeaders: {
